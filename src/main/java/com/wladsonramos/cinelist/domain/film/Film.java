@@ -22,4 +22,11 @@ public class Film {
     private String description;
 
     private LocalDate watchedDate;
+
+    public Film(RequestFilm requestFilm){
+        this.name = requestFilm.name();
+        this.genre = requestFilm.genre();
+        this.description = requestFilm.description();
+        this.watchedDate = requestFilm.watchedDate();
+    }
 }
