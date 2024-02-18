@@ -45,4 +45,10 @@ public class FilmController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteFilm(@PathVariable String id){
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
