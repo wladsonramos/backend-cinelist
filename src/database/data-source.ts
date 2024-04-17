@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { CreateFilms1713347709651 } from './migrations/1713347709651-CreateFilms';
+import { Film } from "../entities/Film";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
     database: "cinelist",
     synchronize: true,
     logging: false,
-    entities: [],
+    entities: [Film],
     subscribers: [],
     migrations: [CreateFilms1713347709651],
 })

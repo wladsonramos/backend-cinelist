@@ -1,7 +1,14 @@
 import "reflect-metadata";
 import express from "express";
 import { AppDataSource } from "./database/data-source";
+import routes from "./routes";
 
-const app = express();
+AppDataSource.initialize().then(() => {
+    const app = express();
 
-app.listen(3000, () => console.log("Server is running"));
+    app.use(express.json())
+    app.use(routes)
+    
+
+    app.listen(3000, () => console.log("Server is running"));
+})
