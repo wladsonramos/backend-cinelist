@@ -36,4 +36,32 @@ export class FilmController {
         }
     }
 
+    async update(req: Request, res: Response) {
+        const { id } = req.params;
+        const { title, description, watched_at } = req.body;
+
+        if (!id) {
+            return res.status(400).json({ message: 'O ID do filme é obrigatório' });
+        }
+
+        try {
+            const film = await filmRepository.findOne({where: {id}});
+
+            if (!film) {
+                return res.status(404).json({ message: 'Filme não encontrado' });
+            }
+
+            film.title = title ? title : film.title;
+            film.description = description ? description : film.description;
+            film.watched_at = watched_at ? watched_at : film.watched_at;
+
+            await filmRepository.save(film);
+
+            return res.json(film);           
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
 }

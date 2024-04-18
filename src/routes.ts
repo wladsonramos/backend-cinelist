@@ -5,6 +5,7 @@ const routes = Router();
 
 routes.post('/films', new FilmController().create)
 routes.get('/films', new FilmController().list)
+routes.put('/films/:id', new FilmController().update)
 
 export default routes
 
