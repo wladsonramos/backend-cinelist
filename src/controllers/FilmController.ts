@@ -6,7 +6,7 @@ export class FilmController {
         const { title, description, watched_at} = req.body
 
         if(!title) {
-            return res.status(400).json({message: 'O título é obrigatório'})
+            return res.status(400).json({ message: 'O título é obrigatório' })
         }
 
         try {
@@ -21,7 +21,7 @@ export class FilmController {
            return res.status(201).json(newFilm)
         } catch (error) {
             console.log(error);
-            return res.status(500).json({message: 'Internal server error'})
+            return res.status(500).json({ message: 'Internal server error' })
         }
     }
 
@@ -32,7 +32,7 @@ export class FilmController {
             return res.json(films)
         } catch (error) {
             console.log(error);
-            return res.status(500).json({message: 'Internal server error'})
+            return res.status(500).json({ message: 'Internal server error' })
         }
     }
 
@@ -58,6 +58,29 @@ export class FilmController {
             await filmRepository.save(film);
 
             return res.json(film);           
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+    async delete(req: Request, res: Response) {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ message: 'O ID do filme é obrigatório' });
+        }
+
+        try {
+            const film = await filmRepository.findOne({  where: { id }});
+
+            if (!film) {
+                return res.status(404).json({ message: 'Filme não encontrado' });
+            }
+
+            await filmRepository.remove(film);
+            
+            return res.status(204).send();
         } catch (error) {
             console.log(error);
             return res.status(500).json({ message: 'Internal server error' });
